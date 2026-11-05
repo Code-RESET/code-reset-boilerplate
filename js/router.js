@@ -6,6 +6,7 @@
 // ============================================================
 
 import { renderDashboard } from "./modules/dashboard.js";
+import { reportarError } from "./errores.js";
 
 // Registro de módulos: agregar aquí cada módulo nuevo del proyecto.
 // path   -> texto después del # en la URL
@@ -21,6 +22,7 @@ const nav = document.getElementById("app-nav");
 const content = document.getElementById("app-content");
 
 let currentUser = null;
+let routerActivo = false;
 
 function buildNav() {
   nav.innerHTML = MODULES.map(
@@ -41,12 +43,31 @@ function renderRoute() {
 
   setActiveLink(mod.path);
   content.innerHTML = "";
-  mod.render(content, currentUser);
+  Promise.resolve()
+    .then(() => mod.render(content, currentUser))
+    .catch((err) => {
+      reportarError(`Módulo ${mod.label}`, err);
+      content.textContent = "No se pudo abrir esta sección.";
+    });
 }
 
 export function initRouter(user) {
   currentUser = user;
   buildNav();
-  window.addEventListener("hashchange", renderRoute);
+  if (!routerActivo) {
+    window.addEventListener("hashchange", renderRoute);
+    routerActivo = true;
+  }
   renderRoute();
+}
+
+// Limpia la vista al salir para no dejar datos en pantalla.
+export function cerrarRouter() {
+  currentUser = null;
+  if (routerActivo) {
+    window.removeEventListener("hashchange", renderRoute);
+    routerActivo = false;
+  }
+  nav.innerHTML = "";
+  content.innerHTML = "";
 }

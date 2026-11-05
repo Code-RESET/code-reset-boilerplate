@@ -1,0 +1,43 @@
+rules_version = '2';
+
+// Plantilla segura por defecto:
+// - Lo que no esté permitido aquí queda bloqueado.
+// - Tener sesión no basta: el UID debe existir en /autorizados.
+// - Los usuarios anónimos siempre se rechazan.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function tieneCuenta() {
+      return request.auth != null
+        && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    function autorizado() {
+      return tieneCuenta()
+        && exists(/databases/$(database)/documents/autorizados/$(request.auth.uid))
+        && get(/databases/$(database)/documents/autorizados/$(request.auth.uid)).data.activo == true;
+    }
+
+    // Los usuarios se autorizan solo desde Firebase Console.
+    match /autorizados/{uid} {
+      allow read: if tieneCuenta() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Guarda aquí los datos de cada app. Agrega roles por módulo si hacen falta.
+    match /datos/{documento=**} {
+      allow read, write: if autorizado();
+    }
+
+    // La app solo puede crear reportes; se leen desde Firebase Console.
+    match /errores/{id} {
+      allow create: if autorizado()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid', 'fecha', 'origen', 'mensaje', 'stack', 'ruta'])
+        && request.resource.data.mensaje is string
+        && request.resource.data.mensaje.size() <= 600
+        && request.resource.data.stack is string
+        && request.resource.data.stack.size() <= 2000;
+      allow read, update, delete: if false;
+    }
+  }
+}

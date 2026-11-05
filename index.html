@@ -19,6 +19,15 @@
 </head>
 <body>
 
+<div id="aviso-prueba" class="aviso-prueba" hidden></div>
+
+<section id="error-fatal" class="error-fatal" hidden>
+  <div>
+    <h1>La app se detuvo</h1>
+    <p id="error-fatal-texto"></p>
+  </div>
+</section>
+
 <!-- ===================== PANTALLA DE LOGIN ===================== -->
 <section id="login-screen" class="screen">
   <div class="login-card">
@@ -59,7 +68,22 @@
   </main>
 </section>
 
-<script type="module" src="js/router.js"></script>
+<!-- ===================== ERRORES VISIBLES ===================== -->
+<button id="btn-errores" class="btn-errores" hidden></button>
+<section id="errores-panel" class="errores-panel" hidden>
+  <div class="errores-card">
+    <h2>Errores registrados</h2>
+    <p>Se guardan en este dispositivo (últimos 50).</p>
+    <ul id="errores-lista"></ul>
+    <div class="errores-acciones">
+      <button id="errores-limpiar" class="btn-ghost">Limpiar</button>
+      <button id="errores-cerrar" class="btn-primary">Cerrar</button>
+    </div>
+  </div>
+</section>
+
+<!-- errores.js va primero para detectar fallos desde el arranque -->
+<script type="module" src="js/errores.js"></script>
 <script type="module" src="js/auth.js"></script>
 
 <script>

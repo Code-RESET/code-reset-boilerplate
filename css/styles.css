@@ -190,3 +190,90 @@ html, body {
   .login-card { padding: 40px 32px; }
   .app-content { padding: 24px; }
 }
+
+/* ==================== MODO PRUEBA Y ERRORES ==================== */
+[hidden] { display: none !important; }
+
+.aviso-prueba {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  padding: 8px var(--gap);
+  background: #ffd24d;
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.error-fatal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  padding: var(--gap);
+  background: var(--bg);
+  text-align: center;
+}
+
+.error-fatal h1 {
+  font-family: var(--font-display);
+  color: var(--danger);
+}
+
+.btn-errores {
+  position: fixed;
+  right: var(--gap);
+  bottom: calc(var(--gap) + env(safe-area-inset-bottom));
+  z-index: 60;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--danger);
+  color: #000000;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.errores-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  display: grid;
+  place-items: center;
+  padding: var(--gap);
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.errores-card {
+  width: min(100%, 520px);
+  max-height: 85dvh;
+  overflow: auto;
+  padding: var(--gap);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+}
+
+.errores-card ul {
+  margin: var(--gap) 0;
+  padding: 0;
+  list-style: none;
+}
+
+.errores-card li {
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  overflow-wrap: anywhere;
+}
+
+.errores-card li p { margin: 4px 0 0; }
+
+.errores-acciones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

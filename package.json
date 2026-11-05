@@ -1,0 +1,11 @@
+{
+  "name": "code-reset-boilerplate",
+  "private": true,
+  "description": "Solo para pruebas. La app sigue corriendo sin npm ni build.",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
