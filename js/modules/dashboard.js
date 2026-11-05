@@ -7,13 +7,14 @@
 // ============================================================
 
 import { db } from "../firebase-config.js";
+import { esc } from "../utils.js";
 // import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 export function renderDashboard(container, user) {
   container.innerHTML = `
     <h2 style="font-family:var(--font-display); color:var(--accent);">Inicio</h2>
     <p style="color:var(--text-dim); font-size:0.85rem;">
-      Sesión activa: ${user?.email || ""}
+      Sesión activa: ${esc(user?.email)}
     </p>
     <p>Este es el módulo de ejemplo. Duplícalo para cada sección real del proyecto.</p>
   `;
