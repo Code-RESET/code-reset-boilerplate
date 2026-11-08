@@ -29,3 +29,9 @@ Logo pequeño + "Desarrollado por: Ing. Luis Ángel Díaz Bernal" + "Compañía:
 ## Estilo de trabajo con Angel
 Angel es el arquitecto/product owner: revisa, prueba y despliega, pero no escribe todo
 el código a mano. Explica brevemente el "por qué" de las decisiones técnicas.
+
+## Skills y agente de Claude Code (en .claude/)
+- `/nuevo-modulo <nombre>`: crea el módulo, lo registra en router.js, lo agrega a CORE_ASSETS y sube CACHE_VERSION.
+- `/reglas-firestore [roles]`: escribe/revisa firestore.rules con el chequeo anti-NEXORA.
+- `/checklist-entrega`: revisión completa antes de entregar al cliente.
+- Agente `revisor-code-reset`: revisor de solo lectura (seguridad, stack, PWA). Usarlo tras cambios importantes.
